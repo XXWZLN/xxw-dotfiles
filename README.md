@@ -1,55 +1,114 @@
-# Installation
+# xxw-dotfiles
 
-```
-brew install tmux, fzf, tldr, fastfetch, yazi, fnm
-```
+Personal configuration files for macOS and Linux servers. This repository provides two editions:
 
-# Kitty Config
+- **Standard**: Full-featured configuration for macOS (requires sudo privileges)
+- **Lite**: Minimal configuration for Linux servers (no sudo required)
 
-[Kitty Web](https://sw.kovidgoyal.net/kitty/)
-下载 Kitty
-将 `./.config/kitty` 复制到 `~/.config/kitty`
+## Standard Edition (macOS)
 
-# Vim Config
+The standard edition includes all configurations with enhanced features for daily development.
 
-1. `cp plug.vim ~/.vim/autoload`
-2. 在 vim 中执行 `:PlugInstall`, 如果有网
-3. 否则将三个文件复制到 `.vim` 中
+### Prerequisites
 
-# Tmux Config
+Install required packages via Homebrew:
 
-下载 tpm
-
-```
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```bash
+brew install tmux fzf tldr fastfetch yazi fnm
 ```
 
-`cp tmux.conf ~/.tmux.conf`
+Install [Kitty terminal emulator](https://sw.kovidgoyal.net/kitty/).
 
-`tmux source ~/.tmux.conf`
+### Installation
 
-# fzf
+```bash
+# Vim configuration
+cp standard/.vimrc ~/.vimrc
+cp -r standard/.vim ~/.vim
 
-[fzf github repo](https://github.com/junegunn/fzf)
+# Zsh configuration
+cp standard/.zshrc ~/.zshrc
 
-``brew install fzf``
+# Other configurations
+cp -r standard/.config ~/.config
+```
 
-``source <(fzf --zsh)``
+### Setup
 
-# tldr
+1. **Tmux**: Load the configuration
 
-人类可读的 `man`
+   ```bash
+   tmux source ~/.config/tmux/tmux.conf
+   ```
+2. **Kitty**: Reload preferences
 
-[git rebo](https://github.com/tldr-pages/tldr/wiki)
+   - macOS: `Ctrl + Cmd + ,`
+   - Linux: `Ctrl + Shift + F5`
+3. **Shell Tools**: fzf, tldr, yazi, and fnm are configured in `.zshrc`
+4. **Fastfetch**: Configured in `.config/fastfetch` and `.config/kitty/kitty.conf` to display system info at shell startup
 
-`brew install tldr`
+## Lite Edition (Linux Server)
 
-add this alias to `~/.zshrc`
-``alias tldrview='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'``
+The lite edition is designed for Linux servers without sudo privileges. It includes essential configurations for Vim and Tmux.
 
-# kitty
+### Optional: Install Zsh
 
-`brew install fastfetch`
+If Zsh is not installed:
 
+1. Install Zsh following the [official guide](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
+2. Install Oh My Zsh using a [mirror](https://mirrors.tuna.tsinghua.edu.cn/help/ohmyzsh.git/) for faster download in China
 
-# References
+### Installation
+
+```bash
+# Vim configuration
+cp lite/.vimrc ~/.vimrc
+cp -r lite/.vim ~/.vim
+
+# Zsh configuration (optional)
+cp lite/.zshrc ~/.zshrc
+
+# Other configurations
+cp -r lite/.config ~/.config
+```
+
+### Setup
+
+**Tmux**: Load the configuration
+
+```bash
+tmux source ~/.config/tmux/tmux.conf
+```
+
+## Features
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/kitty-screen-shot.png">
+  <img src="docs/kitty-screen-shot.png" alt="Kitty Terminal" width="45%">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/tmux-screen-shot.png">
+  <img src="docs/tmux-screen-shot.png" alt="Tmux" width="45%">
+</picture>
+
+- **Vim**: Basic settings with comment toggle plugin (`<Leader>cc` to comment, `<Leader>cu` to uncomment)
+- **Tmux**: Custom keybindings with improved UI and interaction
+- **Kitty**: Terminal emulator configuration (Standard edition only)
+- **fzf**: Fuzzy search integration (Standard edition only)
+  - `Ctrl + R`: Search command history
+  - `Ctrl + T`: Search files
+  - Tab completion for file paths (`/path/**`)
+  - Tab completion for SSH hosts (`ssh **`)
+- **tldr**: Simplified man pages (Standard edition only)
+  - Aliased to `cman` (clever man)
+  - `cmanview` lists all available manuals
+- **yazi**: Visual file manager (Standard edition only)
+- **fnm**: Fast Node.js version manager
+- **fastfetch**: System info display at shell startup (Standard edition only)
+
+## References
+
+- https://www.bilibili.com/video/BV1jCkxBMEF4
+- https://www.bilibili.com/video/BV1DdR8YEE9Z
+- https://github.com/preservim/nerdcommenter
+- https://github.com/junegunn/vim-plug
