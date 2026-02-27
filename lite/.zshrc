@@ -110,6 +110,8 @@ export HOMEBREW_INSTALL_FROM_API=1
 export HOMEBREW_API_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
 export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
 export HF_ENDPOINT="https://hf-mirror.com"
+# to avoid errors in ssh connection when use kitty
+export TERM=xterm-256color
 # <<< var export <<<
 
 # enable fnm
