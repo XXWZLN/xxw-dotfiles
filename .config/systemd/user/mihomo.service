@@ -1,0 +1,20 @@
+[Unit]
+Description=mihomo user service
+Documentation=https://wiki.metacubex.one/en/startup/service/
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/mihomo -f %h/.config/mihomo/config.yaml
+Restart=on-failure
+RestartSec=3
+
+# 日志默认进入 journald。下面两行可以不写，写上只是更明确。
+StandardOutput=journal
+StandardError=journal
+
+# 适当放宽文件句柄数量；用户级服务通常可以设置，但受系统限制影响。
+LimitNOFILE=65535
+
+[Install]
+WantedBy=default.target
