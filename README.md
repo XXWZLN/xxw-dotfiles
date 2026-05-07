@@ -57,12 +57,13 @@ cp -R ./.config/systemd ~/.config/systemd
 配置 `~/.bashrc` 添加如下内容，注意端口需要匹配
 
 ```bash
-onproxy() {
+
+function onproxy() {
     export ALL_PROXY=socks5h://127.0.0.1:7891
     echo "ALL_PROXY=$ALL_PROXY"
 }
 
-offproxy() {
+function offproxy() {
     unset ALL_PROXY
     echo "ALL_PROXY=$ALL_PROXY"
 }
@@ -166,11 +167,21 @@ tmux source ~/.config/tmux/tmux.conf
 ```bash
 alias sz='source ~/.bashrc'
 alias sudo="sudo TERMINFO=\"$TERMINFO\""
-alias y='yazi'
 alias cman='tldr'
 alias sudo="sudo TERMINFO=\"$TERMINFO\""
 alias ll="ls -al"
 alias cc="claude"
+
+# type y to use yazi, 
+# type q to quit yazi and change cwd to the final dir in yazi
+# type Q to quit yazi without any changes
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
 
 export TERM=xterm-256color
 ```
