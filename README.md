@@ -60,12 +60,16 @@ cp -R ./.config/systemd ~/.config/systemd
 
 function onproxy() {
     export ALL_PROXY=socks5h://127.0.0.1:7891
+    export NO_PROXY='127.0.0.1,localhost,::1'
     echo "ALL_PROXY=$ALL_PROXY"
+    echo "NO_PROXY=$NO_PROXY"
 }
 
 function offproxy() {
     unset ALL_PROXY
+    unset NO_PROXY
     echo "ALL_PROXY=$ALL_PROXY"
+    echo "NO_PROXY=$NO_PROXY"
 }
 ```
 
