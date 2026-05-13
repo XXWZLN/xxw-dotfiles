@@ -29,6 +29,33 @@ cp -R ~/.config/fastfetch ~/.config/fastfetch.bak
 
 如果某个文件或目录不存在，可以忽略对应备份命令。
 
+## bashrc/zshrc
+
+记录一些常见的个人使用的 bashrc/zshrc 配置：
+
+```bash
+alias sz='source ~/.bashrc'
+alias sudo="sudo TERMINFO=\"$TERMINFO\""
+alias cman='tldr'
+alias sudo="sudo TERMINFO=\"$TERMINFO\""
+alias ll="ls -al"
+alias cc="claude"
+
+export TERM=xterm-256color
+export PATH="$HOME/.local/bin:$PATH"
+
+# type y to use yazi, 
+# type q to quit yazi and change cwd to the final dir in yazi
+# type Q to quit yazi without any changes
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+```
+
 ## mihomo
 
 mihomo 执行文件、配置文件和 systemd 服务文件 分别放到如下位置：
@@ -57,7 +84,6 @@ cp -R ./.config/systemd ~/.config/systemd
 配置 `~/.bashrc` 添加如下内容，注意端口需要匹配
 
 ```bash
-
 function onproxy() {
     export ALL_PROXY=socks5h://127.0.0.1:7891
     export NO_PROXY='127.0.0.1,localhost,::1'
@@ -143,6 +169,19 @@ cp -R .vim ~/.vim
 - `set clipboard=unnamed` 会尝试使用系统剪贴板；在部分服务器 Vim 构建中可能不支持剪贴板功能。
 - `set nonumber` 关闭行号
 
+## yazi
+
+下载 [yazi repo](https://github.com/sxyazi/yazi) 的包 `yazi-x86_64-unknown-linux-musl.zip`，注意使用 musl 版本
+
+进入下载好的目录下
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+
+ln -s ./ya ./.local/bin/ya
+ln -s ./yazi ./.local/bin/yazi
+```
+
 ## Tmux
 
 **安装配置文件**
@@ -164,31 +203,6 @@ tmux source ~/.config/tmux/tmux.conf
 - `prefix + h/j/k/l` 在窗格之间移动。
 - `prefix + s` 上下分屏，`prefix + v` 左右分屏，都会继承当前路径。
 
-## bashrc/zshrc
-
-记录一些常见的个人使用的 bashrc/zshrc 配置：
-
-```bash
-alias sz='source ~/.bashrc'
-alias sudo="sudo TERMINFO=\"$TERMINFO\""
-alias cman='tldr'
-alias sudo="sudo TERMINFO=\"$TERMINFO\""
-alias ll="ls -al"
-alias cc="claude"
-
-# type y to use yazi, 
-# type q to quit yazi and change cwd to the final dir in yazi
-# type Q to quit yazi without any changes
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	command yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
-}
-
-export TERM=xterm-256color
-```
 
 ## MacOS 软件下载
 
