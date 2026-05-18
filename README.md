@@ -39,7 +39,8 @@ alias sudo="sudo TERMINFO=\"$TERMINFO\""
 alias cman='tldr'
 alias sudo="sudo TERMINFO=\"$TERMINFO\""
 alias ll="ls -al"
-alias cc="claude"
+alias cc="claude --enable-auto-mode --allow-dangerously-skip-permissions"
+
 
 export TERM=xterm-256color
 export PATH="$HOME/.local/bin:$PATH"
